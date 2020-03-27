@@ -1,0 +1,68 @@
+---
+title: "Jam Session"
+author: "Maude Elovitz & Julia Hartnett"
+output: html_notebook
+---
+
+Welcome to our jam session! Why don't we get warmed up to tackle these Data Wrangling moves? Before we can groove, we need to load any packages we will be using. We will be using the tidyverse package to get this dance party started!
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Music is one of the best ways to keep spirits up, which is especially helpful while self isolated to avoid a virus. This tutorial will be using the dataset titled 'top50' from the website Kaggle. This data set contains the Top 50 most listened to songs in the world in 2019. The data set includes many different variables about the songs, including artist name, length, genre, beats per minute, and danceability. 
+
+**1. Filter()**
+
+Before we do anything with our data, it's important to look at it. From a glance, we can tell that this data is not in the ideal format for us to use because of the spaces between entries that show up as "NA."
+
+```{r}
+top50
+```
+
+To get rid of these unneeded lines, we can use our first command, **filter**. Filter allows you to choose the rows you want to be included in your dataset. In this case, we only want the rows with data entries. 
+
+Keep grooving on through to see a code example and explanation!
+
+```{r}
+top50_clean = top50 %>% 
+  filter(X1 %in% c(1:50))
+```
+
+In this piece of code, we first assign the filtered the dataset to be saved as a new data set. We called this "top50_clean" to differentiate between the new and old versions. The next step is to use a **pipeline** to connect commands together. In this case we start with the original data set, "top50", and **pipe** using the operator **%>%** to the filter command to select which rows we want. We filter to choose only rows in the column "X1" by using the **%in%** operator to choose rows that have an X1 value between 1 and 50. Doing this removes all of the rows containing "NA" from our data set and sets us up to boogie on to the next step! 
+
+```{r}
+top50_clean
+```
+
+**2.Select()**
+
+After filtering out the rows we didn't need in the last step, we can now **select** the specific columns we would like to work with in our analysis of the data. We selected the columns containing Track Name, Artist Name, Genre, Beats Per Minute, Danceability, and Popularity. Now our data set is less cluttered and only contains the columns we need. 
+
+```{r}
+top50_clean = top50_clean %>% 
+  select(Track.Name, Artist.Name, Genre, Beats.Per.Minute, Danceability, Popularity)
+```
+
+This code will override the last data set we created names "top50_clean". This way we have the same data set with only the columns we want. The code for this is similar to the code used for filter in the previous step. We statrt the code by setting the name we want the new data set to have, "top50_clean", equal to the name of the data set we are selecting from, in this case the old "top50_clean". Then we pipe to **select** and choose the columns we want to keep.  
+
+```{r}
+top50_clean
+```
+
+**3. Arrange()**
+
+By using **arrange**, we can control the order in which the rows appear based on a certain column. In this case, we want to sort the data to be in order of popularity. We want the songs with the highest popularity rating to appear at the top of the data set. 
+
+```{r}
+top50_clean = top50_clean %>% 
+  arrange(desc(Popularity))
+```
+The code for **arrange** follows similarly to the code for select in the last section. We did the same thing where we overrided the previous data set to contain the new change. After we use the pipe operator, we use the command **arrange** and select the varaible we would like the rows to be in a different order according to, in this case popularity. Because we want the most popular songs to appear at the top of the data set, we need to include **desc**.
+
+```{r}
+top50_clean
+```
+
+
+
